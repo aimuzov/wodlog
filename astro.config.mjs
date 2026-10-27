@@ -31,7 +31,8 @@ export default defineConfig({
 				"default-src 'self'",
 				// Аватарки отдаёт наш же API, см. src/backend/avatars.ts.
 				"img-src 'self' data:",
-				"connect-src 'self'",
+				// Ошибки браузера уходят в Sentry, см. src/frontend/lib/sentry.ts.
+				"connect-src 'self' https://*.ingest.de.sentry.io",
 				// Окно Login Widget.
 				'frame-src https://oauth.telegram.org',
 				"object-src 'none'",

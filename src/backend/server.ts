@@ -1,16 +1,18 @@
 /**
  * API WODlog: вход через Telegram, залы, тренировки дня, результаты и рейтинг.
  *
- * Node запускает файл сам, без сборки и зависимостей. Фронт -- статика в соседнем контейнере,
- * Caddy отдаёт сюда только `/api/*`.
+ * Node запускает файл сам, без сборки, из зависимостей только `@sentry/node`. Фронт -- статика
+ * в соседнем контейнере, Caddy отдаёт сюда только `/api/*`.
  */
 
+// Первым: Sentry должен успеть включиться до остального кода.
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http'
 import { join } from 'node:path'
 
 import { verifyInitData, verifyLoginWidget } from '#backend/auth.ts'
 import { AvatarCache, download, isTelegramImage, type Download, type Image } from '#backend/avatars.ts'
 import { Db, type TelegramUser } from '#backend/db.ts'
+import { captureException } from '#backend/sentry.ts'
 import { botApi, runBot } from '#backend/telegram.ts'
 import type { RatingPeriod, RxWeights, Visibility } from '#shared/types.ts'
 import { InvalidInput, resultInput, text, withRxLoad, workoutDraft } from '#shared/workout.ts'
@@ -379,7 +381,10 @@ export function createApp(db: Db, settings: Settings, fetchImage: Download = dow
 		} catch (error) {
 			const known = error instanceof HttpError || error instanceof InvalidInput
 
-			if (!known) console.error(error)
+			if (!known) {
+				console.error(error)
+				captureException(error)
+			}
 
 			const status = error instanceof HttpError ? error.status : known ? 422 : 500
 
