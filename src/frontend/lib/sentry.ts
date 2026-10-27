@@ -23,6 +23,8 @@ export function sentry() {
 			environment: 'production',
 			release: `wodlog@${version}`,
 			initialScope: { tags: { component: 'site' } },
+			// Без сессий: иначе SDK стучится в Sentry на каждый заход, а не только при ошибке.
+			integrations: (defaults) => defaults.filter(({ name }) => name !== 'BrowserSession'),
 		})
 	}
 
