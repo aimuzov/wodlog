@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.15.4](https://github.com/aimuzov/wodlog/compare/v1.15.3...v1.15.4) (2026-10-27)
+
+
+### Bug Fixes
+
+* **deps:** move to infra-site-kit v5.8.1 ([520b472](https://github.com/aimuzov/wodlog/commit/520b472f6515cd0a33418949b5dd691a9f87718a))
+* **deps:** move to infra-site-kit v5.8.1 ([10ee177](https://github.com/aimuzov/wodlog/commit/10ee177e50d2e13ea77903874f0a39ad6b0876ab))
+
 ## [1.15.3](https://github.com/aimuzov/wodlog/compare/v1.15.2...v1.15.3) (2026-10-27)
 
 
