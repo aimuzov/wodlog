@@ -1,5 +1,6 @@
 // Именованный импорт: в бандл попадает только версия, а не весь package.json.
 import { version } from '#package.json'
+import { dataCollection } from '#shared/sentry.ts'
 
 /**
  * Отправляет ошибки браузера в Sentry, в общий с API проект, с тегом `component: site`.
@@ -23,6 +24,7 @@ export function sentry() {
 			environment: 'production',
 			release: `wodlog@${version}`,
 			initialScope: { tags: { component: 'site' } },
+			dataCollection,
 			// Без сессий: иначе SDK стучится в Sentry на каждый заход, а не только при ошибке.
 			integrations: (defaults) => defaults.filter(({ name }) => name !== 'BrowserSession'),
 		})

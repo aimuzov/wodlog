@@ -9,6 +9,7 @@
 import * as Sentry from '@sentry/node'
 
 import pkg from '#package.json' with { type: 'json' }
+import { dataCollection } from '#shared/sentry.ts'
 
 if (process.env.SENTRY_DSN) {
 	Sentry.init({
@@ -18,6 +19,7 @@ if (process.env.SENTRY_DSN) {
 		// SDK смотрит только на `https_proxy` в нижнем регистре, а compose задаёт `HTTPS_PROXY`.
 		transportOptions: { proxy: process.env.HTTPS_PROXY },
 		initialScope: { tags: { component: 'api' } },
+		dataCollection,
 		// Без сессий: иначе SDK шлёт в Sentry сводки по обычным запросам и здоровью процесса,
 		// а не только ошибки.
 		integrations: (defaults) => [
