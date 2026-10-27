@@ -18,6 +18,12 @@ if (process.env.SENTRY_DSN) {
 		// SDK смотрит только на `https_proxy` в нижнем регистре, а compose задаёт `HTTPS_PROXY`.
 		transportOptions: { proxy: process.env.HTTPS_PROXY },
 		initialScope: { tags: { component: 'api' } },
+		// Без сессий: иначе SDK шлёт в Sentry сводки по обычным запросам и здоровью процесса,
+		// а не только ошибки.
+		integrations: (defaults) => [
+			...defaults.filter(({ name }) => name !== 'Http' && name !== 'ProcessSession'),
+			Sentry.httpIntegration({ sessions: false }),
+		],
 	})
 }
 
