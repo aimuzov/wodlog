@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.3](https://github.com/aimuzov/wodlog/compare/v1.15.2...v1.15.3) (2026-10-27)
+
+
+### Miscellaneous Chores
+
+* release 1.15.3 with Sentry error reporting ([3a36b47](https://github.com/aimuzov/wodlog/commit/3a36b47e23c23e9e4309ddcfaa715a312fac3fd7))
+
 ## [1.15.2](https://github.com/aimuzov/wodlog/compare/v1.15.1...v1.15.2) (2026-10-24)
 
 
