@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.15.5](https://github.com/aimuzov/wodlog/compare/v1.15.4...v1.15.5) (2026-10-28)
+
+
+### Bug Fixes
+
+* **deps:** move to infra-site-kit 5.9.1 with the strict Sentry events ([a160799](https://github.com/aimuzov/wodlog/commit/a160799949f7bbd944f0da508d064f15f1d3763c))
+* **deps:** move to infra-site-kit 5.9.1 with the strict Sentry events ([cb7815d](https://github.com/aimuzov/wodlog/commit/cb7815dc8ae8428b0c5ab15766465ff829850303))
+
 ## [1.15.4](https://github.com/aimuzov/wodlog/compare/v1.15.3...v1.15.4) (2026-10-27)
 
 
