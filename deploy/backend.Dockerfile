@@ -1,5 +1,4 @@
-# API: Node запускает TypeScript сам, сборка не нужна. Из зависимостей только @sentry/node,
-# весь фронт в devDependencies и сюда не ставится.
+# API: Node запускает TypeScript сам, сборка не нужна.
 # Контекст сборки -- корень репо: API берёт типы и логику из src/shared.
 
 FROM node:26.11.1-alpine

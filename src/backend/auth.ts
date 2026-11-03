@@ -4,6 +4,7 @@
  */
 
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto'
+import { verifyInitData as verifyTelegramInitData } from '@aimuzov/infra-node-kit/telegram.js'
 
 import type { TelegramUser } from '#backend/db.ts'
 
@@ -37,28 +38,16 @@ function isTelegramUser(value: unknown): value is TelegramUser {
 
 /** Проверяет initData Mini App. `null`, если подпись не сходится или данные устарели. */
 export function verifyInitData(initData: string, botToken: string, now = Date.now() / 1000): TelegramLogin | null {
-	if (!initData || initData.length > MAX_INIT_DATA) return null
+	const result = verifyTelegramInitData(initData, {
+		botToken,
+		maxAgeSec: MAX_AGE,
+		maxLength: MAX_INIT_DATA,
+		nowSec: now,
+	})
 
-	const fields = new Map(new URLSearchParams(initData))
-	const given = fields.get('hash') ?? ''
+	if (!result.ok || !isTelegramUser(result.user)) return null
 
-	fields.delete('hash')
-
-	// Участвуют все поля, кроме hash, в том числе подпись Ed25519 (`signature`).
-	const secret = createHmac('sha256', 'WebAppData').update(botToken).digest()
-	const expected = createHmac('sha256', secret).update(dataCheckString(fields)).digest('hex')
-
-	if (!safeEqual(given, expected)) return null
-
-	try {
-		if (now - Number.parseInt(fields.get('auth_date')!, 10) > MAX_AGE) return null
-
-		const user = JSON.parse(fields.get('user')!)
-
-		return isTelegramUser(user) ? { user, startParam: fields.get('start_param') ?? null } : null
-	} catch {
-		return null
-	}
+	return { user: result.user, startParam: result.params.get('start_param') ?? null }
 }
 
 /** Проверяет ответ Login Widget: те же поля, но ключ -- sha256 от токена, а не HMAC. */

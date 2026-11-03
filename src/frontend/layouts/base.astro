@@ -1,4 +1,5 @@
 ---
+import Seo from '@aimuzov/infra-site-kit/seo.astro'
 import Footer from '#frontend/components/footer.astro'
 import '@aimuzov/infra-site-kit/base.css'
 import '#frontend/styles/global.css'
@@ -34,15 +35,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site)
 		<meta name="theme-color" content="#0c0c0f" />
 		<link rel="manifest" href="/manifest.webmanifest" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		<title>{fullTitle}</title>
-		<meta name="description" content={description} />
-		{index ? <link rel="canonical" href={canonical} /> : <meta name="robots" content="noindex" />}
-		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content={site.name} />
-		<meta property="og:locale" content="ru_RU" />
-		<meta property="og:url" content={canonical} />
-		<meta property="og:title" content={fullTitle} />
-		<meta property="og:description" content={description} />
+		<Seo
+			title={fullTitle}
+			description={description}
+			siteName={site.name}
+			url={canonical}
+			locale="ru_RU"
+			type="website"
+			canonical={index ? canonical : undefined}
+			robots={index ? undefined : 'noindex'}
+		/>
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<slot name="head" />
 	</head>
