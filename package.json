@@ -23,11 +23,11 @@
 		"api": "node --watch --env-file-if-exists=.env src/backend/server.ts"
 	},
 	"dependencies": {
-		"@aimuzov/infra-node-kit": "github:aimuzov/infra-node-kit#dbab73172f7ae9dd101afca9577ed3d931347674",
+		"@aimuzov/infra-node-kit": "github:aimuzov/infra-node-kit#52a4c6048915370f2e814fbac690ef7c49025b2e",
 		"@sentry/node": "11.9.0"
 	},
 	"devDependencies": {
-		"@aimuzov/infra-site-kit": "github:aimuzov/infra-site-kit#d459456a071921196e94bbe4dfecbf5987efb96f",
+		"@aimuzov/infra-site-kit": "github:aimuzov/infra-site-kit#661bf5760d9fda3c0ba6bd35ddb4cbb4537aa929",
 		"@astrojs/check": "0.9.10",
 		"@astrojs/sitemap": "3.7.4",
 		"@astrojs/svelte": "9.0.1",
