@@ -23,7 +23,7 @@
 		"api": "node --watch --env-file-if-exists=.env src/backend/server.ts"
 	},
 	"dependencies": {
-		"@aimuzov/infra-node-kit": "github:aimuzov/infra-node-kit#d573224402df679b4cfe17139cff80c5570c9706",
+		"@aimuzov/infra-node-kit": "github:aimuzov/infra-node-kit#dbab73172f7ae9dd101afca9577ed3d931347674",
 		"@sentry/node": "11.9.0"
 	},
 	"devDependencies": {
