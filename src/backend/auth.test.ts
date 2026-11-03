@@ -43,3 +43,13 @@ test('accepts a Login Widget payload', () => {
 	assert.equal(verifyLoginWidget({ ...fields, id: 43, hash }, TOKEN, NOW), null)
 	assert.equal(verifyLoginWidget({ ...fields, hash }, TOKEN, NOW + 2 * 24 * 3600), null)
 })
+
+test('rejects malformed Mini App dates and keeps the existing future-date policy', () => {
+	for (const auth_date of ['', 'bad', '0', '1.2'])
+		assert.equal(verifyInitData(signInitData({ auth_date, user }), TOKEN, NOW), null)
+
+	assert.equal(
+		verifyInitData(signInitData({ auth_date: String(NOW + 60), user, signature: 'ed25519' }), TOKEN, NOW)?.user.id,
+		42,
+	)
+})

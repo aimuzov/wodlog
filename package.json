@@ -23,21 +23,19 @@
 		"api": "node --watch --env-file-if-exists=.env src/backend/server.ts"
 	},
 	"dependencies": {
+		"@aimuzov/infra-node-kit": "github:aimuzov/infra-node-kit#52a4c6048915370f2e814fbac690ef7c49025b2e",
 		"@sentry/node": "11.9.0"
 	},
 	"devDependencies": {
-		"@aimuzov/infra-site-kit": "github:aimuzov/infra-site-kit#v5.9.1",
+		"@aimuzov/infra-site-kit": "github:aimuzov/infra-site-kit#661bf5760d9fda3c0ba6bd35ddb4cbb4537aa929",
 		"@astrojs/check": "0.9.10",
 		"@astrojs/sitemap": "3.7.4",
 		"@astrojs/svelte": "9.0.1",
-		"@csstools/postcss-global-data": "4.0.0",
 		"@playwright/test": "1.64.0",
 		"@sentry/browser": "11.9.0",
 		"@types/node": "26.6.5",
 		"astro": "7.3.7",
 		"oxlint": "1.87.0",
-		"postcss-custom-media": "12.0.3",
-		"postcss-nested": "8.0.1",
 		"prettier": "3.9.9",
 		"stylelint": "17.16.0",
 		"svelte": "5.57.2",

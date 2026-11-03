@@ -1,13 +1,14 @@
 /**
  * API WODlog: вход через Telegram, залы, тренировки дня, результаты и рейтинг.
  *
- * Node запускает файл сам, без сборки, из зависимостей только `@sentry/node`. Фронт -- статика
+ * Node запускает файл сам, без сборки. Фронт -- статика
  * в соседнем контейнере, Caddy отдаёт сюда только `/api/*`.
  */
 
 // Первым: Sentry должен успеть включиться до остального кода.
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http'
 import { join } from 'node:path'
+import { HttpError, readJson as readJsonBody } from '@aimuzov/infra-node-kit/http.js'
 
 import { verifyInitData, verifyLoginWidget } from '#backend/auth.ts'
 import { AvatarCache, download, isTelegramImage, type Download, type Image } from '#backend/avatars.ts'
@@ -43,45 +44,16 @@ type Context = {
 	body: () => Promise<Record<string, unknown>>
 }
 
-/**
- * Ошибка с HTTP-статусом для клиента.
- *
- * Статус и сообщение уходят в ответ как есть. Любая другая ошибка пишется в лог
- * и отдаётся с кодом 500.
- */
-export class HttpError extends Error {
-	// Без parameter properties: Node только стирает типы и такой синтаксис не запустит.
-	readonly status: number
+export { HttpError }
 
-	constructor(status: number, message: string) {
-		super(message)
-		this.status = status
-	}
-}
-
-/** Тело запроса как JSON-объект. 413, если оно больше `limit`, 400, если это не объект. */
-export async function readJson(request: AsyncIterable<Buffer>, limit = BODY_LIMIT): Promise<Record<string, unknown>> {
-	const chunks: Buffer[] = []
-
-	let size = 0
-
-	for await (const chunk of request) {
-		size += chunk.length
-
-		if (size > limit) throw new HttpError(413, 'Слишком большой запрос')
-
-		chunks.push(chunk)
-	}
-
-	try {
-		const body = JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}')
-
-		if (typeof body === 'object' && body !== null && !Array.isArray(body)) return body
-	} catch {
-		// Ответим так же, как на не-объект.
-	}
-
-	throw new HttpError(400, 'Тело запроса не JSON-объект')
+export function readJson(request: AsyncIterable<Buffer>, limit = BODY_LIMIT): Promise<Record<string, unknown>> {
+	return readJsonBody(request, {
+		limit,
+		tooLargeMessage: 'Слишком большой запрос',
+		invalidJsonMessage: 'Тело запроса не JSON-объект',
+		emptyObject: true,
+		objectOnly: true,
+	})
 }
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/
