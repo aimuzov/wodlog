@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/aimuzov/wodlog/compare/v1.15.5...v1.16.0) (2026-11-12)
+
+
+### Features
+
+* **deploy:** publish Wodlog images from GitHub Actions ([#64](https://github.com/aimuzov/wodlog/issues/64)) ([bc36ba8](https://github.com/aimuzov/wodlog/commit/bc36ba866bfa0fe9f35ee9093a23e1a55d626e7c))
+
 ## [1.15.5](https://github.com/aimuzov/wodlog/compare/v1.15.4...v1.15.5) (2026-10-28)
 
 
