@@ -27,7 +27,7 @@
 		"@sentry/node": "11.9.0"
 	},
 	"devDependencies": {
-		"@aimuzov/infra-site-kit": "github:aimuzov/infra-site-kit#661bf5760d9fda3c0ba6bd35ddb4cbb4537aa929",
+		"@aimuzov/infra-site-kit": "github:aimuzov/infra-site-kit#b7bcdbe8ade8e06a7bea4f55ff4f29796388241e",
 		"@astrojs/check": "0.9.12",
 		"@astrojs/sitemap": "3.7.6",
 		"@astrojs/svelte": "9.1.6",
